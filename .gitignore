@@ -11,6 +11,7 @@ MemoryCaptures/
 *.mdb
 *.shader
 *.hlsl
+*.cginc
 *.exe
 *.apk
 *.dll
