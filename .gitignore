@@ -9,6 +9,8 @@ MemoryCaptures/
 *.svd
 *.pdb
 *.mdb
+*.shader
+*.hlsl
 *.exe
 *.apk
 *.dll

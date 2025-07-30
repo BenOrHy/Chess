@@ -12,17 +12,16 @@ public class absUnit : MonoBehaviour
     public int moveCount = 0;
 
     public GameObject[] PointObjSet = new GameObject[64];
-
     private GameObject pointContainer;
 
     void Awake()
     {
-        mainPos = this.transform.position;
         position();
     }
 
     public void position()
     {
+        mainPos = this.GetComponent<Snap>().initiateLoc;
         Points.Clear();
 
         if (unitType == 1)
@@ -35,16 +34,6 @@ public class absUnit : MonoBehaviour
 
             if (initiate && IsInsideBoard(front2) && !IsUnitAt(front1) && !IsUnitAt(front2))
                 Points.Add(front2);
-
-            Vector3[] attacks = {
-                new Vector3(mainPos.x + 1, mainPos.y + 1, 0),
-                new Vector3(mainPos.x - 1, mainPos.y + 1, 0)
-            };
-            foreach (var atk in attacks)
-            {
-                if (IsInsideBoard(atk) && IsEnemyAt(atk))
-                    Points.Add(atk);
-            }
         }
 
         if (unitType == 2)
@@ -72,6 +61,7 @@ public class absUnit : MonoBehaviour
                 new Vector3(+1, +1, 0), new Vector3(+1, -1, 0),
                 new Vector3(-1, -1, 0), new Vector3(-1, +1, 0)
             };
+
             foreach (var dir in dirs)
             {
                 for (int i = 1; i < 8; i++)
@@ -92,6 +82,7 @@ public class absUnit : MonoBehaviour
             Vector3[] dirs = {
                 Vector3.right, Vector3.left, Vector3.up, Vector3.down
             };
+
             foreach (var dir in dirs)
             {
                 for (int i = 1; i < 8; i++)
@@ -114,6 +105,7 @@ public class absUnit : MonoBehaviour
                 new Vector3(+1, +1, 0), new Vector3(+1, -1, 0),
                 new Vector3(-1, -1, 0), new Vector3(-1, +1, 0)
             };
+
             foreach (var dir in dirs)
             {
                 for (int i = 1; i < 8; i++)
@@ -156,28 +148,18 @@ public class absUnit : MonoBehaviour
 
     bool IsUnitAt(Vector3 pos)
     {
-        return Physics.OverlapSphere(pos, 0.1f).Length > 0;
+        return Physics2D.OverlapCircle(pos, 0.1f) != null;
     }
 
     bool IsBlockedBySameTeam(Vector3 pos)
     {
-        Collider[] hits = Physics.OverlapSphere(pos, 0.1f);
-        foreach (var hit in hits)
-        {
-            if (hit.gameObject != this.gameObject && hit.CompareTag(this.tag))
-                return true;
-        }
-        return false;
+        Collider2D hit = Physics2D.OverlapCircle(pos, 0.1f);
+        return hit != null && hit.gameObject != this.gameObject && hit.CompareTag(this.tag);
     }
 
     bool IsEnemyAt(Vector3 pos)
     {
-        Collider[] hits = Physics.OverlapSphere(pos, 0.1f);
-        foreach (var hit in hits)
-        {
-            if (hit.gameObject != this.gameObject && !hit.CompareTag(this.tag))
-                return true;
-        }
-        return false;
+        Collider2D hit = Physics2D.OverlapCircle(pos, 0.1f);
+        return hit != null && hit.gameObject != this.gameObject && !hit.CompareTag(this.tag);
     }
 }

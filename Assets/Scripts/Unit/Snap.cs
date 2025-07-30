@@ -7,7 +7,7 @@ public class Snap : MonoBehaviour
     public bool isDragging;
     private Vector3 offset;
     public Vector3 mainPos;
-    public float snapRange = 0.5f;
+    public float snapRange = 0.1f;
     public List<Vector3> snapPoints = new List<Vector3>();
 
     public Vector3 initiateLoc;
@@ -25,26 +25,14 @@ public class Snap : MonoBehaviour
 
         initiateLoc = this.transform.position;
 
-        if (unit.Points != null && unit.Points.Count > 0)
-        {
-            snapPoints = unit.Points;
-        }
-        else
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    snapPoints.Add(new Vector3(i, j, 0));
-                }
-            }
-        }
+        snapPoints = unit.Points;
     }
 
     void OnMouseDown()
     {
         if (!isDragging)
         {
+            unit.position();
             points.ShowPoints(unit.Points);
             isDragging = true;
         }
