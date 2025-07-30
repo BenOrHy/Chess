@@ -26,14 +26,27 @@ public class absUnit : MonoBehaviour
 
         if (unitType == 1)
         {
-            Vector3 front1 = new Vector3(mainPos.x, mainPos.y + 1, 0);
-            Vector3 front2 = new Vector3(mainPos.x, mainPos.y + 2, 0);
+            if (this.tag.Equals("Black"))
+            {
+                Vector3 front1 = new Vector3(mainPos.x, mainPos.y + 1, 0);
+                Vector3 front2 = new Vector3(mainPos.x, mainPos.y + 2, 0);
 
-            if (IsInsideBoard(front1) && !IsUnitAt(front1))
-                Points.Add(front1);
+                if (IsInsideBoard(front1) && !IsUnitAt(front1))
+                    Points.Add(front1);
 
-            if (initiate && IsInsideBoard(front2) && !IsUnitAt(front1) && !IsUnitAt(front2))
-                Points.Add(front2);
+                if (initiate && IsInsideBoard(front2) && !IsUnitAt(front1) && !IsUnitAt(front2))
+                    Points.Add(front2);
+            }
+            else if (this.tag.Equals("White")){
+                Vector3 front1 = new Vector3(mainPos.x, mainPos.y - 1, 0);
+                Vector3 front2 = new Vector3(mainPos.x, mainPos.y - 2, 0);
+
+                if (IsInsideBoard(front1) && !IsUnitAt(front1))
+                    Points.Add(front1);
+
+                if (initiate && IsInsideBoard(front2) && !IsUnitAt(front1) && !IsUnitAt(front2))
+                    Points.Add(front2);
+            }
         }
 
         if (unitType == 2)

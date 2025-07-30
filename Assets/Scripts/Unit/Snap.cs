@@ -7,7 +7,7 @@ public class Snap : MonoBehaviour
     public bool isDragging;
     private Vector3 offset;
     public Vector3 mainPos;
-    public float snapRange = 0.1f;
+    public float snapRange = 0.5f;
     public List<Vector3> snapPoints = new List<Vector3>();
 
     public Vector3 initiateLoc;
